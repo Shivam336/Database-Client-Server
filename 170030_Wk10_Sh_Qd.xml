@@ -1,0 +1,131 @@
+<!--
+Database & Client Server
+Week 10  Study hall
+Q d
+
+@author Shivam Singhal  (170030) 
+-->
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            Library Schema By Shivam Singhal
+        </xsd:documentation>
+    </xsd:annotation>
+<xsd:element name="library">
+    <xsd:complexType>
+       <xsd:sequence>
+        <xsd:element name="book" type="Book" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="book_author" type="Book_Author" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="publisher" type="Publisher" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="book_copies" type="Book_Copies" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="book_loans" type="Book_Loans" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="library_branch" type="Library_Branch" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="borrower" type="Borrower" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:key name="book_idKey">
+        <xsd:selector xpath="book"/>
+        <xsd:field xpath="Book_Id"/>
+    </xsd:key>
+    <xsd:key name="branch_idKey">
+        <xsd:selector xpath="book_copies"/>
+        <xsd:field xpath="Branch_Id"/>
+    </xsd:key>
+
+    <xsd:key name="card_NoKey">
+        <xsd:selector xpath="book_loans"/>
+        <xsd:field xpath="Card_No"/>
+    </xsd:key>
+    
+    <xsd:keyref name="BookAuthor_book_idKeyRef" refer="book_idKey">
+        <xsd:selector xpath="book_author"/>
+        <xsd:field xpath="Book_Id"/>
+    </xsd:keyref>
+    
+    <xsd:keyref name="BookCopies_book_idKeyRef" refer="book_idKey">
+        <xsd:selector xpath="book_copies"/>
+        <xsd:field xpath="Book_Id"/>
+    </xsd:keyref>
+    
+    <xsd:keyref name="BookLoans_book_idKeyRef" refer="book_idKey">
+        <xsd:selector xpath="book_loans"/>
+        <xsd:field xpath="Book_Id"/>
+    </xsd:keyref>
+    
+    <xsd:keyref name="BookLoans_branch_idKeyRef" refer="branch_idKey">
+        <xsd:selector xpath="book_loans"/>
+        <xsd:field xpath="Branch_Id"/>
+    </xsd:keyref>
+    
+    <xsd:keyref name="LibraryBranch_branch_idKeyRef" refer="branch_idKey">
+        <xsd:selector xpath="library_branch"/>
+        <xsd:field xpath="Branch_Id"/>
+    </xsd:keyref>
+
+    <xsd:keyref name="Brrower_cardNoKeyRef" refer="card_NoKey">
+        <xsd:selector xpath="borrower"/>
+        <xsd:field xpath="Card_No"/>
+    </xsd:keyref>
+    
+</xsd:element>
+          
+           <xsd:complexType name="Book">
+            <xsd:sequence>
+                <xsd:element name="Book_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="title" type="xsd:string" maxOccurs="unbounded"/>
+                <xsd:element name="publisher_name" type="xsd:string" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:complexType name="Book_Author">
+            <xsd:sequence>
+                <xsd:element name="Book_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Author_name" type="xsd:string" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:complexType name="Publisher">
+            <xsd:sequence>
+                <xsd:element name="Name" type="xsd:string" maxOccurs="unbounded"/>
+                <xsd:element name="Address" type="xsd:string" maxOccurs="unbounded"/>
+                <xsd:element name="Phone" type="xsd:int" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:complexType name="Book_Copies">
+            <xsd:sequence>
+                <xsd:element name="Book_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Branch_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="No_of_Copies" type="xsd:int" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        
+        <xsd:complexType name="Book_Loans">
+            <xsd:sequence>
+                <xsd:element name="Book_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Branch_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Card_No" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Date_Out" type="xsd:date" maxOccurs="unbounded"/>
+                <xsd:element name="Due_Date" type="xsd:date" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:complexType name="Library_Branch">
+            <xsd:sequence>
+                <xsd:element name="Branch_Id" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Book_Name" type="xsd:string" maxOccurs="unbounded"/>
+                <xsd:element name="Address" type="xsd:int" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:complexType name="Borrower">
+            <xsd:sequence>
+                <xsd:element name="Card_No" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Name" type="xsd:string" maxOccurs="unbounded"/>
+                <xsd:element name="Address" type="xsd:int" maxOccurs="unbounded"/>
+                <xsd:element name="Phone" type="xsd:int" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+</xsd:schema>
